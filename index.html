@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Redline Logistics — ETS2 Virtual Trucking Company</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap">
+<style>
+  :root {
+    --bg: #0B0B0C;
+    --bg2: #141414;
+    --card: #171717;
+    --line: #262626;
+    --accent: #E5342E;
+    --fg: #FFFFFF;
+    --muted: #9A9A9A;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    box-sizing: border-box;
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); scroll-behavior: smooth; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Space Grotesk', -apple-system, Segoe UI, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  header {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 20;
+    background: rgba(11,11,12,0.9);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav.wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    gap: 20px;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .mark {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--bg2); border: 2px solid var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden; flex-shrink: 0;
+  }
+  .mark::after {
+    content: ""; position: absolute; top: 0; right: 0;
+    width: 16px; height: 16px; background: var(--accent);
+    clip-path: polygon(100% 0, 100% 100%, 0 0);
+  }
+  .mark span { font-weight: 700; font-size: 15px; position: relative; z-index: 1; }
+  .brand-name { font-weight: 700; font-size: 17px; letter-spacing: -0.3px; white-space: nowrap; }
+  .brand-name em { color: var(--accent); font-style: normal; }
+
+  .nav-links { display: flex; gap: 32px; font-size: 14px; font-weight: 500; color: var(--muted); }
+  .nav-links a:hover { color: var(--fg); }
+
+  .btn {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-primary { background: var(--accent); color: var(--bg); }
+  .btn-primary:hover { background: #c92a25; }
+  .btn-outline { background: transparent; color: var(--fg); border: 1px solid #3A3A3A; }
+  .btn-outline:hover { border-color: var(--accent); }
+
+  .menu-toggle { display: none; background: none; border: none; color: var(--fg); font-size: 24px; cursor: pointer; }
+
+  .hero {
+    padding: 100px 24px 80px;
+    text-align: center;
+    position: relative;
+  }
+  .hero-ring {
+    position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 800px; max-width: 140vw; max-height: 140vw;
+    border-radius: 50%; border: 1px solid var(--line); pointer-events: none;
+  }
+  .eyebrow {
+    display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 3px;
+    color: var(--accent); border: 1px solid var(--accent); padding: 8px 16px;
+    border-radius: 999px; margin-bottom: 28px; position: relative; z-index: 1;
+  }
+  .hero h1 {
+    font-size: clamp(40px, 7vw, 76px);
+    line-height: 1.05; letter-spacing: -1.5px; margin: 0 0 24px; position: relative; z-index: 1;
+  }
+  .hero p {
+    font-size: 18px; color: var(--muted); max-width: 600px; margin: 0 auto 36px;
+    line-height: 1.6; position: relative; z-index: 1;
+  }
+  .hero-ctas { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; position: relative; z-index: 1; }
+
+  .stats {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    max-width: 900px; margin: 0 auto; padding: 0 24px 80px;
+  }
+  .stat {
+    flex: 1 1 200px; text-align: center; padding: 16px 24px;
+    border-right: 1px solid var(--line);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-num { font-size: 40px; font-weight: 700; color: var(--accent); }
+  .stat-label { font-size: 13px; letter-spacing: 2px; color: var(--muted); margin-top: 6px; }
+
+  section.band { padding: 80px 24px; }
+  section.band.alt { background: var(--bg2); }
+
+  .two-col { display: flex; gap: 60px; align-items: center; flex-wrap: wrap; }
+  .two-col > div { flex: 1 1 340px; }
+
+  .eyebrow-sm { font-size: 12px; font-weight: 700; letter-spacing: 3px; color: var(--accent); margin-bottom: 14px; }
+  h2 { font-size: clamp(28px, 4vw, 38px); margin: 0 0 20px; }
+  .lede { font-size: 16px; color: var(--muted); line-height: 1.7; }
+
+  .route-svg { width: 100%; max-width: 340px; margin: 0 auto; display: block; }
+
+  .section-head { text-align: center; max-width: 640px; margin: 0 auto 48px; }
+
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 900px) {
+    .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .grid-4 { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 28px;
+  }
+  .card svg { margin-bottom: 16px; }
+  .card h3 { font-size: 16px; margin: 0 0 8px; }
+  .card p { font-size: 14px; color: var(--muted); line-height: 1.6; margin: 0; }
+  .event-time { font-size: 12px; font-weight: 700; letter-spacing: 2px; color: var(--accent); margin-bottom: 10px; }
+  .event-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+
+  .cta { text-align: center; padding: 100px 24px; }
+  .cta h2 { margin-bottom: 16px; }
+  .cta p { color: var(--muted); margin-bottom: 32px; }
+
+  footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 32px 24px; border-top: 1px solid var(--line);
+    max-width: 1200px; margin: 0 auto; gap: 16px; flex-wrap: wrap;
+    font-size: 13px; color: var(--muted);
+  }
+  .footer-brand { display: flex; align-items: center; gap: 12px; }
+
+  @media (max-width: 780px) {
+    .nav-links { display: none; }
+    .menu-toggle { display: block; }
+    .hero { padding-top: 70px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="brand">
+      <div class="mark"><span>RL</span></div>
+      <div class="brand-name">REDLINE <em>LOGISTICS</em></div>
+    </div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#requirements">Requirements</a>
+      <a href="#events">Events</a>
+      <a href="#join">Apply</a>
+    </div>
+    <a href="https://discord.gg/4f2YwzyWAM" class="btn btn-primary">Join Discord</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-ring" aria-hidden="true"></div>
+  <div class="eyebrow">ETS2 VIRTUAL TRUCKING COMPANY</div>
+  <h1>PUSH THE LINE.</h1>
+  <p>Professional convoys. Tracked deliveries. A standard built by drivers who take the road seriously.</p>
+  <div class="hero-ctas">
+    <a href="https://discord.gg/4f2YwzyWAM" class="btn btn-primary">Join Our Discord</a>
+    <a href="#requirements" class="btn btn-outline">Apply to Drive</a>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat"><div class="stat-num">120+</div><div class="stat-label">ACTIVE DRIVERS</div></div>
+  <div class="stat"><div class="stat-num">2.4M</div><div class="stat-label">MILES DELIVERED</div></div>
+  <div class="stat"><div class="stat-num">12</div><div class="stat-label">CONVOYS MONTHLY</div></div>
+</div>
+
+<section class="band alt" id="about">
+  <div class="wrap two-col">
+    <div>
+      <div class="eyebrow-sm">WHO WE ARE</div>
+      <h2>Built by drivers who wanted better.</h2>
+      <p class="lede">Redline Logistics started with a simple idea: virtual trucking deserves the same discipline as the real thing. We run scheduled convoys, track every delivery, and hold every member — staff included — to one standard. No shortcuts, no excuses, just consistent mileage and a crew that shows up.</p>
+    </div>
+    <div>
+      <svg class="route-svg" viewBox="0 0 360 280" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 240 L120 140 L200 190 L340 40" stroke="#E5342E" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="20" cy="240" r="9" fill="#E5342E"/>
+        <circle cx="200" cy="190" r="9" fill="#FFFFFF"/>
+        <circle cx="340" cy="40" r="9" fill="#E5342E"/>
+        <line x1="0" y1="270" x2="360" y2="270" stroke="#3A3A3A" stroke-width="1"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="requirements">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow-sm">GETTING STARTED</div>
+      <h2>What it takes to drive with us</h2>
+    </div>
+    <div class="grid-4">
+      <div class="card">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E5342E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <h3>Own ETS2</h3>
+        <p>Valid Steam copy of Euro Truck Simulator 2.</p>
+      </div>
+      <div class="card">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E5342E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <h3>Clean TMP Record</h3>
+        <p>Active TruckersMP account, no current bans.</p>
+      </div>
+      <div class="card">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E5342E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <h3>3 Deliveries / Week</h3>
+        <p>Minimum activity to maintain Driver status.</p>
+      </div>
+      <div class="card">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E5342E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <h3>Follow the Rules</h3>
+        <p>TMP traffic rules and our own conduct standards.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="events">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow-sm">ON THE CALENDAR</div>
+      <h2>Upcoming convoys</h2>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="event-time">SAT · 20:00 UTC</div>
+        <div class="event-title">Berlin → Rotterdam</div>
+        <p>Weekly flagship convoy, open to all Drivers and above.</p>
+      </div>
+      <div class="card">
+        <div class="event-time">WED · 19:30 UTC</div>
+        <div class="event-title">Trainee Orientation Run</div>
+        <p>Short guided route for new members, led by a Trainer.</p>
+      </div>
+      <div class="card">
+        <div class="event-time">SUN · 21:00 UTC</div>
+        <div class="event-title">Alps Endurance Run</div>
+        <p>Long-haul monthly event through mountain routes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="join">
+  <h2>Ready to push the line?</h2>
+  <p>Join the Discord, read the rules, and put in your first application today.</p>
+  <a href="https://discord.gg/4f2YwzyWAM" class="btn btn-primary">Join Our Discord</a>
+</section>
+
+<footer>
+  <div class="footer-brand">
+    <div class="mark" style="width:32px;height:32px;"><span style="font-size:12px;">RL</span></div>
+    <div>© 2026 Redline Logistics. Not affiliated with SCS Software or TruckersMP.</div>
+  </div>
+  <div>DISCORD · TRUCKERSMP · YOUTUBE</div>
+</footer>
+
+</body>
+</html>
